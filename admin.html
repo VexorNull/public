@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Add Story</title>
+    <title>Admin Dashboard v9.0</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container admin-box">
-        <h2>Post New Story</h2>
+        <h2>Post New Story <span class="version-tag">v9.0</span></h2>
         
         <form id="storyForm">
+            <div class="form-group">
+                <label>Admin Passcode:</label>
+                <input type="password" id="adminPin" placeholder="Enter Admin Security PIN" required>
+            </div>
+
             <div class="form-group">
                 <label>User / Admin Name:</label>
                 <input type="text" id="authorName" placeholder="Enter name" required>
@@ -23,6 +28,11 @@
                     <option value="image">Image</option>
                     <option value="video">Video</option>
                 </select>
+            </div>
+
+            <div class="form-group" id="bgColorGroup">
+                <label>Background Color (For Text Only):</label>
+                <input type="color" id="bgColor" value="#075e54">
             </div>
 
             <div class="form-group" id="textInputGroup">
@@ -38,7 +48,18 @@
             <button type="submit" id="submitBtn">Publish Story</button>
         </form>
 
+        <hr class="divider">
+
+        <h3>Manage Active Stories</h3>
+        <div class="admin-story-list" id="adminStoryList">
+            <!-- Active stories with delete options -->
+        </div>
+
         <a href="index.html" class="back-link">&larr; Back to Main Feed</a>
+        
+        <footer>
+            <p>Powered by <strong>Tanveer Hussain</strong> (@vexornull)</p>
+        </footer>
     </div>
 
     <script type="module" src="admin.js"></script>
