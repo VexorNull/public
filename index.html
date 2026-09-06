@@ -3,50 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status Feed v9.0</title>
+
+    <!-- Primary Meta Tags -->
+    <title>Status Feed v9.0 | Realtime Dynamic Stories by Tanveer Hussain</title>
+    <meta name="title" content="Status Feed v9.0 | Realtime Dynamic Stories by Tanveer Hussain">
+    <meta name="description" content="Explore real-time interactive status updates, dynamic media stories, and seamless user experiences built by Tanveer Hussain (@vexornull).">
+    <meta name="keywords" content="Status Feed, Web App, Dynamic Stories, Firestore Web App, Tanveer Hussain, vexornull, Interactive Web Apps, Realtime Updates">
+    <meta name="author" content="Tanveer Hussain">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://github.com/vexornull">
+
+    <!-- Open Graph / Facebook / WhatsApp Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/vexornull">
+    <meta property="og:title" content="Status Feed v9.0 | Realtime Dynamic Stories">
+    <meta property="og:description" content="Check out live status updates and interactive stories built with modern web technologies by Tanveer Hussain.">
+    <meta property="og:image" content="https://lh3.googleusercontent.com/d/1NzqmZp796ksKZrtpuMabgqpFXTGV3YIR">
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://github.com/vexornull">
+    <meta property="twitter:title" content="Status Feed v9.0 | Realtime Dynamic Stories">
+    <meta property="twitter:description" content="Explore real-time status updates and dynamic stories created by Tanveer Hussain.">
+    <meta property="twitter:image" content="https://lh3.googleusercontent.com/d/1NzqmZp796ksKZrtpuMabgqpFXTGV3YIR">
+
+    <!-- Favicon & Touch Icon -->
     <link rel="icon" type="image/png" href="https://vexornull.github.io/public/favicon.png">
+    <link rel="apple-touch-icon" href="https://vexornull.github.io/public/favicon.png">
+
+    <!-- Stylesheets & Fonts -->
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- JSON-LD Structured Data for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Status Feed",
+      "applicationCategory": "SocialNetworkingApplication",
+      "operatingSystem": "All",
+      "url": "https://github.com/vexornull",
+      "author": {
+        "@type": "Person",
+        "name": "Tanveer Hussain",
+        "sameAs": [
+          "https://github.com/vexornull"
+        ]
+      },
+      "description": "A realtime dynamic story status feed application.",
+      "softwareVersion": "9.0"
+    }
+    </script>
 </head>
 <body>
-    <div class="app-container">
+    <main class="app-container">
         <!-- Floating Ambient Blur Backgrounds -->
-        <div class="ambient-glow glow-1"></div>
-        <div class="ambient-glow glow-2"></div>
+        <div class="ambient-glow glow-1" aria-hidden="true"></div>
+        <div class="ambient-glow glow-2" aria-hidden="true"></div>
 
         <header>
             <div class="brand">
-                <div class="logo-dot"></div>
-                <h2>Status Feed</h2>
+                <div class="logo-dot" aria-hidden="true"></div>
+                <h1>Status Feed</h1>
                 <span class="version-tag">v9.0</span>
             </div>
-            <a href="admin.html" class="btn-admin">
+            <a href="admin.html" class="btn-admin" title="Go to Admin Panel">
                 <span>Admin Panel</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
         </header>
 
         <!-- Status Tray -->
-        <div class="tray-wrapper">
-            <p class="tray-title">RECENT UPDATES</p>
+        <section class="tray-wrapper" aria-label="Recent Status Updates">
+            <h2 class="tray-title">RECENT UPDATES</h2>
             <div class="status-tray" id="statusTray">
                 <!-- Dynamic Stories will load here -->
             </div>
-        </div>
+        </section>
 
         <footer>
-            <p>Crafted by <strong>Tanveer Hussain</strong> (<a href="https://github.com/vexornull" target="_blank">@vexornull</a>)</p>
+            <p>Crafted by <strong>Tanveer Hussain</strong> (<a href="https://github.com/vexornull" target="_blank" rel="noopener">@vexornull</a>)</p>
         </footer>
-    </div>
+    </main>
 
     <!-- Google-Style Dynamic Story Viewer Modal -->
-    <div class="story-modal" id="storyModal">
+    <div class="story-modal" id="storyModal" role="dialog" aria-modal="true" aria-label="Story Viewer">
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
         </div>
-        <button class="close-btn" id="closeModal" aria-label="Close">&times;</button>
+        <button class="close-btn" id="closeModal" aria-label="Close Story">&times;</button>
         
         <!-- Aesthetic Loading Spinner -->
         <div id="storyLoader" class="story-loader hidden">
@@ -61,7 +109,7 @@
         <div id="storyViews" class="story-views hidden">👁️ 0 views</div>
 
         <div class="viewer-credit">
-            <span class="pulse-icon"></span> Tanveer Hussain @vexornull
+            <span class="pulse-icon" aria-hidden="true"></span> Tanveer Hussain @vexornull
         </div>
     </div>
 
