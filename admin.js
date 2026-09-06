@@ -6,22 +6,34 @@ const contentType = document.getElementById('contentType');
 const textGroup = document.getElementById('textInputGroup');
 const fileGroup = document.getElementById('fileInputGroup');
 const storyForm = document.getElementById('storyForm');
+const submitBtn = document.getElementById('submitBtn');
 
 contentType.addEventListener('change', (e) => {
     if (e.target.value === 'text') {
         textGroup.classList.remove('hidden');
         fileGroup.classList.add('hidden');
     } else {
+        textGroup.classList.remove('hidden'); // Caption ke liye optional text field
         fileGroup.classList.remove('hidden');
     }
 });
 
 storyForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    
     const type = contentType.value;
     const author = document.getElementById('authorName').value;
     const text = document.getElementById('storyText').value;
-    const file = document.getElementById('mediaFile').files[0];
+    const fileInput = document.getElementById('mediaFile');
+    const file = fileInput.files[0];
+
+    if (type !== 'text' && !file) {
+        alert("Khabardar: Image ya Video file select karna zaroori hai!");
+        return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Uploading...";
 
     let mediaUrl = "";
 
@@ -35,16 +47,19 @@ storyForm.addEventListener('submit', async (e) => {
         await addDoc(collection(db, "stories"), {
             author: author,
             type: type,
-            text: text,
+            text: text || "",
             mediaUrl: mediaUrl,
             createdAt: serverTimestamp()
         });
 
-        alert("Story Posted Successfully!");
+        alert("Story successfully publish ho gayi hai!");
         storyForm.reset();
         window.location.href = "index.html";
     } catch (err) {
-        console.error("Error adding document: ", err);
-        alert("Upload Failed: " + err.message);
+        console.error("Error adding story: ", err);
+        alert("Upload fail hua: " + err.message);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Publish Story";
     }
 });
