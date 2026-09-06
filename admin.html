@@ -5,11 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard v9.0</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container admin-box">
-        <h2>Post New Story <span class="version-tag">v9.0</span></h2>
-        
+        <!-- Floating Ambient Glows -->
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+
+        <header>
+            <div class="brand">
+                <div class="logo-dot"></div>
+                <h2>Admin Panel</h2>
+                <span class="version-tag">v9.0</span>
+            </div>
+            <a href="index.html" class="btn-admin">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Feed</span>
+            </a>
+        </header>
+
         <form id="storyForm">
             <div class="form-group">
                 <label>Admin Passcode:</label>
@@ -17,12 +34,12 @@
             </div>
 
             <div class="form-group">
-                <label>User / Admin Name:</label>
+                <label>Author Name:</label>
                 <input type="text" id="authorName" placeholder="Enter name" required>
             </div>
 
             <div class="form-group">
-                <label>Select Content Type:</label>
+                <label>Content Type:</label>
                 <select id="contentType">
                     <option value="text">Text Only</option>
                     <option value="image">Image</option>
@@ -31,13 +48,13 @@
             </div>
 
             <div class="form-group" id="bgColorGroup">
-                <label>Background Color (For Text Only):</label>
-                <input type="color" id="bgColor" value="#075e54">
+                <label>Background Color:</label>
+                <input type="color" id="bgColor" value="#0b0f19">
             </div>
 
             <div class="form-group" id="textInputGroup">
                 <label>Story Text / Caption:</label>
-                <textarea id="storyText" placeholder="Write something..."></textarea>
+                <textarea id="storyText" placeholder="Write something..." rows="3"></textarea>
             </div>
 
             <div class="form-group hidden" id="fileInputGroup">
@@ -50,13 +67,13 @@
 
         <hr class="divider">
 
-        <h3>Manage Active Stories</h3>
-        <div class="admin-story-list" id="adminStoryList">
-            <!-- Active stories with delete options -->
+        <div class="manage-section">
+            <h3>Manage Active Stories</h3>
+            <div class="admin-story-list" id="adminStoryList">
+                <!-- Dynamic active stories list -->
+            </div>
         </div>
 
-        <a href="index.html" class="back-link">&larr; Back to Main Feed</a>
-        
         <footer>
             <p>Powered by <strong>Tanveer Hussain</strong> (@vexornull)</p>
         </footer>
