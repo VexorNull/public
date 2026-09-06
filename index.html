@@ -3,25 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status / Stories View</title>
+    <title>Status Feed v9.0</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
         <header>
-            <h2>Status Feed</h2>
+            <div>
+                <h2>Status Feed</h2>
+                <span class="version-tag">v9.0</span>
+            </div>
             <a href="admin.html" class="btn-admin">Admin Panel</a>
         </header>
 
+        <!-- Status Tray -->
         <div class="status-tray" id="statusTray">
-            </div>
+            <!-- Dynamic Stories -->
+        </div>
+
+        <footer>
+            <p>Developed by <strong>Tanveer Hussain</strong> (<a href="https://github.com/vexornull" target="_blank">@vexornull</a>)</p>
+        </footer>
     </div>
 
+    <!-- Fullscreen Story Viewer Modal -->
     <div class="story-modal" id="storyModal">
-        <div class="progress-bar-container" id="progressBar"></div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
         <button class="close-btn" id="closeModal">&times;</button>
         <div class="story-content" id="storyContent">
-            </div>
+            <!-- Dynamic Content -->
+        </div>
+        <div class="viewer-credit">Tanveer Hussain @vexornull</div>
     </div>
 
     <script type="module" src="app.js"></script>
