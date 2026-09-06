@@ -4,97 +4,131 @@ import { collection, query, orderBy, onSnapshot, doc, updateDoc, increment } fro
 const statusTray = document.getElementById('statusTray');
 const storyModal = document.getElementById('storyModal');
 const storyContent = document.getElementById('storyContent');
-const closeModal = document.getElementById('closeModal');
 const progressBar = document.getElementById('progressBar');
+const storyViews = document.getElementById('storyViews');
+const closeBtn = document.getElementById('closeBtn');
 
+// Fixed Profile Image URL from Google Drive
+const PROFILE_IMAGE = "https://lh3.googleusercontent.com/d/1NzqmZp796ksKZrtpuMabgqpFXTGV3YIR";
+
+let currentStories = [];
 let storyTimer = null;
+let progressInterval = null;
 
+// Realtime Listener for Stories
 const q = query(collection(db, "stories"), orderBy("createdAt", "desc"));
 
 onSnapshot(q, (snapshot) => {
+    currentStories = snapshot.docs.map(docSnap => ({
+        id: docSnap.id,
+        ...docSnap.data()
+    }));
+
+    renderStatusTray();
+});
+
+function renderStatusTray() {
+    if (!statusTray) return;
     statusTray.innerHTML = "";
 
-    if(snapshot.empty) {
-        statusTray.innerHTML = `<p class="no-status">No active status available</p>`;
+    if (currentStories.length === 0) {
+        statusTray.innerHTML = `<p class="no-status">No active stories</p>`;
         return;
     }
 
-    snapshot.docs.forEach(docSnap => {
-        const story = docSnap.data();
-        const storyId = docSnap.id;
-
+    currentStories.forEach((story, index) => {
         const item = document.createElement('div');
         item.className = 'status-item';
+        
+        // Dynamic Profile Image inside the Ring
         item.innerHTML = `
             <div class="avatar-ring">
-                <div class="avatar-inner">${story.author.charAt(0).toUpperCase()}</div>
+                <div class="avatar-inner">
+                    <img src="${PROFILE_IMAGE}" alt="${story.author}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                </div>
             </div>
-            <p>${story.author}</p>
+            <p>${story.author || 'User'}</p>
         `;
-        
-        item.addEventListener('click', () => openStory(story, storyId));
+
+        item.addEventListener('click', () => openStory(index));
         statusTray.appendChild(item);
     });
-});
+}
 
-async function openStory(story, storyId) {
+async function openStory(index) {
+    const story = currentStories[index];
+    if (!story) return;
+
+    storyModal.classList.add('active');
     storyContent.innerHTML = "";
     
+    // View count increment
     try {
-        const storyRef = doc(db, "stories", storyId);
-        await updateDoc(storyRef, { views: increment(1) });
+        await updateDoc(doc(db, "stories", story.id), {
+            views: increment(1)
+        });
     } catch (e) {
-        console.log("View update issue:", e);
+        console.error("View count error:", e);
     }
 
+    storyViews.innerText = `👁️ ${ (story.views || 0) + 1 } views`;
+
+    // Render Content based on type
     if (story.type === 'text') {
-        storyContent.style.backgroundColor = story.bgColor || "#075e54";
-        storyContent.innerHTML = `
-            <div class="story-text-display">${story.text}</div>
-            <div class="story-views">👁️ ${ (story.views || 0) + 1 } views</div>
-        `;
-    } else {
+        storyContent.style.backgroundColor = story.bgColor || "#0b0f19";
+        storyContent.innerHTML = `<div class="story-text-display">${story.text}</div>`;
+    } else if (story.type === 'image') {
         storyContent.style.backgroundColor = "#000";
-        if (story.type === 'image') {
-            storyContent.innerHTML = `
-                <div class="media-container">
-                    <img src="${story.mediaUrl}" />
-                    ${story.text ? `<p class="caption">${story.text}</p>` : ''}
-                    <div class="story-views">👁️ ${ (story.views || 0) + 1 } views</div>
-                </div>`;
-        } else if (story.type === 'video') {
-            storyContent.innerHTML = `
-                <div class="media-container">
-                    <video src="${story.mediaUrl}" autoplay muted playsinline></video>
-                    ${story.text ? `<p class="caption">${story.text}</p>` : ''}
-                    <div class="story-views">👁️ ${ (story.views || 0) + 1 } views</div>
-                </div>`;
-        }
+        storyContent.innerHTML = `
+            <div class="media-container">
+                <img src="${story.mediaUrl}" alt="Story">
+                ${story.text ? `<div class="caption">${story.text}</div>` : ''}
+            </div>
+        `;
+    } else if (story.type === 'video') {
+        storyContent.style.backgroundColor = "#000";
+        storyContent.innerHTML = `
+            <div class="media-container">
+                <video src="${story.mediaUrl}" autoplay playsinline></video>
+                ${story.text ? `<div class="caption">${story.text}</div>` : ''}
+            </div>
+        `;
     }
-    
-    storyModal.classList.add('active');
-    startProgressBar(6000);
+
+    startProgress(index);
 }
 
-function startProgressBar(duration) {
+function startProgress(currentIndex) {
+    clearInterval(progressInterval);
     clearTimeout(storyTimer);
-    progressBar.style.width = "0%";
-    
-    setTimeout(() => {
-        progressBar.style.transition = `width ${duration}ms linear`;
-        progressBar.style.width = "100%";
-    }, 50);
+
+    let width = 0;
+    progressBar.style.width = '0%';
+
+    progressInterval = setInterval(() => {
+        width += 2;
+        progressBar.style.width = width + '%';
+        if (width >= 100) {
+            clearInterval(progressInterval);
+        }
+    }, 100); // 5 seconds total
 
     storyTimer = setTimeout(() => {
-        closeStoryModal();
-    }, duration);
+        if (currentIndex + 1 < currentStories.length) {
+            openStory(currentIndex + 1);
+        } else {
+            closeStory();
+        }
+    }, 5000);
 }
 
-function closeStoryModal() {
+function closeStory() {
     storyModal.classList.remove('active');
-    progressBar.style.transition = "none";
-    progressBar.style.width = "0%";
+    clearInterval(progressInterval);
     clearTimeout(storyTimer);
+    progressBar.style.width = '0%';
 }
 
-closeModal.addEventListener('click', closeStoryModal);
+if (closeBtn) {
+    closeBtn.addEventListener('click', closeStory);
+}
