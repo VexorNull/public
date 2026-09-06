@@ -148,6 +148,14 @@ header h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
     background-color: #121827; border: 2px solid var(--bg-dark);
     display: flex; justify-content: center; align-items: center;
     color: #fff; font-weight: 700; font-size: 18px;
+    overflow: hidden; /* Image circle se bahar nah jaye */
+}
+
+.avatar-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .status-item p {
@@ -156,7 +164,7 @@ header h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
 }
 
-/* Modal Story Viewer (Full-Screen Picture Upgrade) */
+/* Modal Story Viewer (Full Screen View) */
 .story-modal {
     display: none; 
     position: fixed; 
@@ -203,7 +211,7 @@ header h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
     width: 100%; 
     height: 100%; 
     border-radius: 0; 
-    object-fit: contain; /* Pure display size fit karne ke liye */
+    object-fit: contain; 
 }
 
 .story-text-display { font-size: 28px; font-weight: 700; padding: 40px; word-break: break-word; }
