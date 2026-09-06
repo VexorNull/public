@@ -3,421 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tanveer Connect - Firebase Platform</title>
-    <!-- FontAwesome CDN -->
+    <title>Tanveer Connect</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --danger: #ef4444;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --border: #e2e8f0;
-            --white: #ffffff;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
-        .container { width: 90%; max-width: 1100px; margin: 0 auto; padding: 0 15px; }
-
-        .btn {
-            padding: 10px 20px; background-color: var(--primary); color: var(--white);
-            border-radius: 8px; font-weight: 500; cursor: pointer; border: none; transition: 0.3s;
-        }
-        .btn:hover { background-color: var(--primary-hover); }
-        .btn-danger { background-color: var(--danger); }
-
+        body { background-color: #f8fafc; color: #0f172a; padding: 15px; }
+        
         /* Header */
-        header { background: var(--white); box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; }
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
-        .logo { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
-        .admin-badge { background: #dcfce7; color: #15803d; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; display: none; }
-
-        /* Stories */
-        .stories-container { background: var(--white); padding: 20px; margin: 20px 0; border-radius: 12px; box-shadow: var(--shadow); }
-        .stories-wrapper { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 5px; }
-        .story-card { flex: 0 0 80px; text-align: center; cursor: pointer; position: relative; }
-        .story-img-wrapper { width: 70px; height: 70px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, #f09433, #dc2743, #cc2366); margin: 0 auto 5px; }
-        .story-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--white); }
-        .story-name { font-size: 0.75rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .delete-btn { position: absolute; top: 0; right: 0; background: var(--danger); color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 11px; display: none; align-items: center; justify-content: center; border: none; cursor: pointer; }
-
-        /* Admin Control Panel */
-        .admin-panel { background: var(--white); border: 2px dashed var(--primary); padding: 25px; border-radius: 12px; margin-bottom: 30px; display: none; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 15px 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .brand { font-weight: 700; font-size: 1.2rem; color: #4f46e5; }
+        .admin-btn { background: #4f46e5; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; }
+        
+        .container { max-width: 600px; margin: 0 auto; }
+        
+        /* Admin Panel */
+        .admin-panel { display: none; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; border: 2px solid #6366f1; }
         .admin-panel.active { display: block; }
-        .panel-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        .tab-btn { background: none; border: none; padding: 8px 16px; cursor: pointer; font-weight: 600; color: var(--gray); }
-        .tab-btn.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
-        .form-control { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid var(--border); border-radius: 6px; outline: none; }
-
-        /* Progress Bar UI */
-        .progress-box { display: none; margin: 15px 0; background: #e2e8f0; border-radius: 10px; overflow: hidden; height: 22px; position: relative; }
-        .progress-bar { width: 0%; height: 100%; background: var(--primary); transition: width 0.2s ease; }
-        .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 12px; font-weight: 700; color: #fff; display: flex; align-items: center; justify-content: center; text-shadow: 0 0 3px rgba(0,0,0,0.6); }
-
-        /* Feed Grid */
-        .feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; margin-bottom: 40px; }
-        .post-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); position: relative; }
-        .post-header { padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
-        .post-info { display: flex; align-items: center; gap: 10px; }
-        .post-avatar { width: 35px; height: 35px; border-radius: 50%; }
-        .post-image { width: 100%; height: 220px; object-fit: cover; }
+        .form-control { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; }
+        .submit-btn { width: 100%; padding: 10px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 5px; }
+        .submit-btn:disabled { background: #94a3b8; }
+        
+        /* Feed Cards */
+        .post-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        .post-card img { width: 100%; max-height: 400px; object-fit: cover; display: block; }
         .post-content { padding: 15px; }
-
-        /* Modal */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: var(--white); padding: 20px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; }
-        .modal-img { width: 100%; max-height: 350px; object-fit: cover; border-radius: 8px; }
-
-        body.admin-mode .delete-btn { display: flex !important; }
-        body.admin-mode .admin-badge { display: inline-block; }
+        .post-time { font-size: 0.75rem; color: #64748b; margin-top: 5px; }
     </style>
 </head>
 <body>
 
+<div class="container">
     <!-- Header -->
-    <header>
-        <div class="container navbar">
-            <div class="logo">Tanveer Connect <span class="admin-badge" id="adminBadge">Admin Mode</span></div>
-            <div>
-                <button class="btn" id="loginAdminBtn"><i class="fa-solid fa-lock"></i> Admin Login</button>
-            </div>
-        </div>
-    </header>
-
-    <main class="container">
-
-        <!-- Status Stories -->
-        <section class="stories-container">
-            <h4 style="margin-bottom: 10px;">Recent Stories / Status</h4>
-            <div class="stories-wrapper" id="storiesWrapper"></div>
-        </section>
-
-        <!-- Admin Control Panel -->
-        <section class="admin-panel" id="adminPanel">
-            <h3><i class="fa-solid fa-cloud-arrow-up"></i> Control Center</h3>
-            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 15px;">Real-time Cloud Upload System</p>
-            
-            <div class="panel-tabs">
-                <button class="tab-btn active" id="tabPostBtn">Add Feed Post</button>
-                <button class="tab-btn" id="tabStoryBtn">Add Status Story</button>
-            </div>
-
-            <!-- Upload Progress Bar -->
-            <div class="progress-box" id="progressBox">
-                <div class="progress-bar" id="progressBar"></div>
-                <div class="progress-text" id="progressText">0%</div>
-            </div>
-
-            <!-- Add Post Form -->
-            <div id="postTab">
-                <input type="text" id="postText" class="form-control" placeholder="Post Caption...">
-                <label style="font-size: 0.85rem; font-weight: 600;">Select Image File:</label>
-                <input type="file" id="postImgFile" class="form-control" accept="image/*">
-                <button class="btn" id="uploadPostBtn"><i class="fa-solid fa-plus"></i> Publish Post</button>
-            </div>
-
-            <!-- Add Story Form -->
-            <div id="storyTab" style="display: none;">
-                <input type="text" id="storyName" class="form-control" placeholder="Status Title/User Name...">
-                <label style="font-size: 0.85rem; font-weight: 600;">Select Story Image:</label>
-                <input type="file" id="storyImgFile" class="form-control" accept="image/*">
-                <button class="btn" id="uploadStoryBtn"><i class="fa-solid fa-upload"></i> Post Story</button>
-            </div>
-        </section>
-
-        <!-- Feed Section -->
-        <section>
-            <h3 style="margin-bottom: 15px;">Live Updates Feed</h3>
-            <div class="feed-grid" id="feedGrid"></div>
-        </section>
-
-    </main>
-
-    <!-- Modal -->
-    <div class="modal" id="storyModal">
-        <div class="modal-content">
-            <img src="" id="modalImg" class="modal-img">
-            <h4 id="modalName" style="margin-top: 10px;">User</h4>
-            <button class="btn btn-danger" style="margin-top: 15px;" id="closeModalBtn">Close</button>
-        </div>
+    <div class="header">
+        <div class="brand"><i class="fa-solid fa-circle-check"></i> Tanveer Connect</div>
+        <button class="admin-btn" id="loginAdminBtn"><i class="fa-solid fa-lock"></i> Admin Login</button>
     </div>
 
-    <!-- Main Logic Script linked with External auth.js -->
-    <script type="module">
-        import { loginAdmin, logoutAdmin, initAuthObserver } from './auth.js';
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+    <!-- Admin Upload Form -->
+    <div class="admin-panel" id="adminPanel">
+        <h3 style="margin-bottom: 10px;">Create New Post</h3>
+        <input type="text" id="postText" class="form-control" placeholder="Write caption here...">
+        <input type="file" id="postImg" class="form-control" accept="image/*">
+        <button class="submit-btn" id="uploadBtn">Publish Post</button>
+        <div id="statusMsg" style="margin-top: 10px; font-size: 0.85rem; font-weight: 600;"></div>
+    </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyA1S9u1f3VOdZnP6puMhCVwAG6kwL4Vu5Q",
-            authDomain: "public-361f0.firebaseapp.com",
-            projectId: "public-361f0",
-            storageBucket: "public-361f0.firebasestorage.app",
-            messagingSenderId: "519361882049",
-            appId: "1:519361882049:web:fa1d69dff9d59df4f43140",
-            measurementId: "G-25WKCZG3EF"
-        };
+    <!-- Live Posts Feed -->
+    <h3 style="margin-bottom: 15px; color: #334155;">Live Updates Feed</h3>
+    <div id="feed"></div>
+</div>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        let isAdmin = false;
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyA1S9u1f3VOdZnP6puMhCVwAG6kwL4Vu5Q",
+        authDomain: "public-361f0.firebaseapp.com",
+        projectId: "public-361f0",
+        storageBucket: "public-361f0.firebasestorage.app",
+        messagingSenderId: "519361882049",
+        appId: "1:519361882049:web:fa1d69dff9d59df4f43140"
+    };
 
-        // Auth State Tracking
-        initAuthObserver((user) => {
-            if (user) {
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Direct PIN Admin System
+    let isAdmin = false;
+    const ADMIN_PIN = "1234";
+
+    document.getElementById('loginAdminBtn').addEventListener('click', () => {
+        if (!isAdmin) {
+            const pin = prompt("Enter Admin Secret PIN:");
+            if (pin === ADMIN_PIN) {
                 isAdmin = true;
-                document.body.classList.add('admin-mode');
                 document.getElementById('adminPanel').classList.add('active');
                 document.getElementById('loginAdminBtn').innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Logout';
-            } else {
-                isAdmin = false;
-                document.body.classList.remove('admin-mode');
-                document.getElementById('adminPanel').classList.remove('active');
-                document.getElementById('loginAdminBtn').innerHTML = '<i class="fa-solid fa-lock"></i> Admin Login';
+            } else if (pin !== null) {
+                alert("Incorrect PIN Code!");
             }
+        } else {
+            isAdmin = false;
+            document.getElementById('adminPanel').classList.remove('active');
+            document.getElementById('loginAdminBtn').innerHTML = '<i class="fa-solid fa-lock"></i> Admin Login';
+        }
+    });
+
+    // Image Compressor to Base64
+    function compressImage(file) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const maxWidth = 800;
+                    const scale = maxWidth / img.width;
+                    canvas.width = maxWidth;
+                    canvas.height = img.height * scale;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    resolve(canvas.toDataURL('image/jpeg', 0.7));
+                };
+            };
         });
+    }
 
-        // Admin Toggle Event
-        document.getElementById('loginAdminBtn').addEventListener('click', async () => {
-            if (!isAdmin) {
-                const email = prompt("Enter Admin Email:");
-                const password = prompt("Enter Password:");
-                if (email && password) {
-                    const res = await loginAdmin(email, password);
-                    if (!res.success) alert("Login Error: " + res.message);
-                }
-            } else {
-                await logoutAdmin();
-            }
-        });
+    // Post Upload Action
+    document.getElementById('uploadBtn').addEventListener('click', async () => {
+        const text = document.getElementById('postText').value;
+        const fileInput = document.getElementById('postImg').files[0];
+        const status = document.getElementById('statusMsg');
+        const btn = document.getElementById('uploadBtn');
 
-        // Tabs Toggle
-        const tabPostBtn = document.getElementById('tabPostBtn');
-        const tabStoryBtn = document.getElementById('tabStoryBtn');
-        const postTab = document.getElementById('postTab');
-        const storyTab = document.getElementById('storyTab');
-
-        tabPostBtn.addEventListener('click', () => {
-            postTab.style.display = 'block'; storyTab.style.display = 'none';
-            tabPostBtn.classList.add('active'); tabStoryBtn.classList.remove('active');
-        });
-
-        tabStoryBtn.addEventListener('click', () => {
-            postTab.style.display = 'none'; storyTab.style.display = 'block';
-            tabStoryBtn.classList.add('active'); tabPostBtn.classList.remove('active');
-        });
-
-        // Helper: Convert File to Base64 (Fallback)
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
+        if (!text || !fileInput) {
+            alert('Aap caption aur image dono select karein!');
+            return;
         }
 
-        // Upload Pipeline Engine
-        async function processUpload(file, folderPath) {
-            const progressBox = document.getElementById('progressBox');
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-
-            progressBox.style.display = 'block';
-            progressBar.style.width = '20%';
-            progressText.innerText = '20% Processing...';
-
-            try {
-                const storagePath = `${folderPath}/${Date.now()}_${file.name}`;
-                const storageRef = ref(storage, storagePath);
-                const uploadTask = uploadBytesResumable(storageRef, file);
-
-                return await new Promise((resolve) => {
-                    uploadTask.on('state_changed',
-                        (snapshot) => {
-                            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                            progressBar.style.width = progress + '%';
-                            progressText.innerText = progress + '% Uploading...';
-                        },
-                        async () => {
-                            const base64Url = await fileToBase64(file);
-                            progressBox.style.display = 'none';
-                            resolve({ url: base64Url, path: '' });
-                        },
-                        async () => {
-                            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                            progressBox.style.display = 'none';
-                            resolve({ url: downloadURL, path: storagePath });
-                        }
-                    );
-                });
-            } catch (err) {
-                const base64Url = await fileToBase64(file);
-                progressBox.style.display = 'none';
-                return { url: base64Url, path: '' };
-            }
-        }
-
-        // Upload Story Action
-        document.getElementById('uploadStoryBtn').addEventListener('click', async () => {
-            const name = document.getElementById('storyName').value;
-            const file = document.getElementById('storyImgFile').files[0];
-
-            if (!name || !file) {
-                alert('Title aur Image select karein!');
-                return;
-            }
-
-            const btn = document.getElementById('uploadStoryBtn');
+        try {
             btn.disabled = true;
+            status.style.color = "#d97706";
+            status.innerText = "Compressing & Publishing...";
 
-            const uploadRes = await processUpload(file, 'stories');
+            const base64Img = await compressImage(fileInput);
 
-            try {
-                await addDoc(collection(db, "stories"), {
-                    name: name,
-                    img: uploadRes.url,
-                    storagePath: uploadRes.path,
-                    timestamp: Date.now()
-                });
-                document.getElementById('storyName').value = '';
-                document.getElementById('storyImgFile').value = '';
-                alert("Story Uploaded Successfully!");
-            } catch(e) {
-                alert("Database Error: " + e.message);
-            } finally {
-                btn.disabled = false;
-            }
-        });
-
-        // Upload Post Action
-        document.getElementById('uploadPostBtn').addEventListener('click', async () => {
-            const text = document.getElementById('postText').value;
-            const file = document.getElementById('postImgFile').files[0];
-
-            if (!text || !file) {
-                alert('Caption aur Image dono select karein!');
-                return;
-            }
-
-            const btn = document.getElementById('uploadPostBtn');
-            btn.disabled = true;
-
-            const uploadRes = await processUpload(file, 'posts');
-
-            try {
-                await addDoc(collection(db, "posts"), {
-                    author: "Tanveer Hussain",
-                    text: text,
-                    img: uploadRes.url,
-                    storagePath: uploadRes.path,
-                    timestamp: Date.now()
-                });
-                document.getElementById('postText').value = '';
-                document.getElementById('postImgFile').value = '';
-                alert("Post Published Successfully!");
-            } catch(e) {
-                alert("Database Error: " + e.message);
-            } finally {
-                btn.disabled = false;
-            }
-        });
-
-        // Realtime Listener - Stories
-        const storiesQuery = query(collection(db, "stories"), orderBy("timestamp", "desc"));
-        onSnapshot(storiesQuery, (snapshot) => {
-            const storiesWrapper = document.getElementById('storiesWrapper');
-            storiesWrapper.innerHTML = '';
-            snapshot.forEach((docSnap) => {
-                const story = docSnap.data();
-                const id = docSnap.id;
-
-                const div = document.createElement('div');
-                div.className = 'story-card';
-                div.innerHTML = `
-                    <button class="delete-btn" data-id="${id}"><i class="fa-solid fa-xmark"></i></button>
-                    <div class="story-img-wrapper">
-                        <img src="${story.img}" class="story-img">
-                    </div>
-                    <div class="story-name">${story.name}</div>
-                `;
-
-                div.querySelector('.story-img-wrapper').addEventListener('click', () => {
-                    document.getElementById('modalImg').src = story.img;
-                    document.getElementById('modalName').innerText = story.name;
-                    document.getElementById('storyModal').style.display = 'flex';
-                });
-
-                div.querySelector('.delete-btn').addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    deleteStory(id, story.storagePath);
-                });
-
-                storiesWrapper.appendChild(div);
+            await addDoc(collection(db, "posts"), {
+                text: text,
+                img: base64Img,
+                timestamp: Date.now()
             });
-        });
 
-        // Realtime Listener - Posts
-        const postsQuery = query(collection(db, "posts"), orderBy("timestamp", "desc"));
-        onSnapshot(postsQuery, (snapshot) => {
-            const feedGrid = document.getElementById('feedGrid');
-            feedGrid.innerHTML = '';
-            snapshot.forEach((docSnap) => {
-                const post = docSnap.data();
-                const id = docSnap.id;
-                
-                const card = document.createElement('div');
-                card.className = 'post-card';
-                card.innerHTML = `
-                    <div class="post-header">
-                        <div class="post-info">
-                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80" class="post-avatar">
-                            <div>
-                                <strong>${post.author}</strong><br>
-                                <small style="color:var(--gray);">${new Date(post.timestamp).toLocaleTimeString()}</small>
-                            </div>
-                        </div>
-                        <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+            status.style.color = "#059669";
+            status.innerText = "Post Live Successfully!";
+            document.getElementById('postText').value = '';
+            document.getElementById('postImg').value = '';
+        } catch (err) {
+            status.style.color = "#dc2626";
+            status.innerText = "Error: " + err.message;
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
+    // Realtime Database Fetch
+    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+    onSnapshot(q, (snapshot) => {
+        const feed = document.getElementById('feed');
+        feed.innerHTML = '';
+        snapshot.forEach((doc) => {
+            const post = doc.data();
+            const timeStr = new Date(post.timestamp).toLocaleString();
+            feed.innerHTML += `
+                <div class="post-card">
+                    <img src="${post.img}">
+                    <div class="post-content">
+                        <p style="font-weight: 500;">${post.text}</p>
+                        <div class="post-time">${timeStr}</div>
                     </div>
-                    <img src="${post.img}" class="post-image">
-                    <div class="post-content"><p>${post.text}</p></div>
-                `;
-
-                card.querySelector('.delete-btn').addEventListener('click', () => {
-                    deletePost(id, post.storagePath);
-                });
-
-                feedGrid.appendChild(card);
-            });
+                </div>
+            `;
         });
+    });
+</script>
 
-        // Delete Logic
-        async function deletePost(id, path) {
-            if (confirm("Delete post?")) {
-                await deleteDoc(doc(db, "posts", id));
-                if (path) await deleteObject(ref(storage, path)).catch(() => {});
-            }
-        }
-
-        async function deleteStory(id, path) {
-            if (confirm("Delete story?")) {
-                await deleteDoc(doc(db, "stories", id));
-                if (path) await deleteObject(ref(storage, path)).catch(() => {});
-            }
-        }
-
-        document.getElementById('closeModalBtn').addEventListener('click', () => {
-            document.getElementById('storyModal').style.display = 'none';
-        });
-    </script>
 </body>
 </html>
