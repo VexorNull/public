@@ -5,37 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status Feed v9.0</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
+        <!-- Floating Ambient Blur Backgrounds -->
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+
         <header>
-            <div>
+            <div class="brand">
+                <div class="logo-dot"></div>
                 <h2>Status Feed</h2>
                 <span class="version-tag">v9.0</span>
             </div>
-            <a href="admin.html" class="btn-admin">Admin Panel</a>
+            <a href="admin.html" class="btn-admin">
+                <span>Admin Panel</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
         </header>
 
         <!-- Status Tray -->
-        <div class="status-tray" id="statusTray">
-            <!-- Dynamic Stories -->
+        <div class="tray-wrapper">
+            <p class="tray-title">RECENT UPDATES</p>
+            <div class="status-tray" id="statusTray">
+                <!-- Dynamic Stories will load here -->
+            </div>
         </div>
 
         <footer>
-            <p>Developed by <strong>Tanveer Hussain</strong> (<a href="https://github.com/vexornull" target="_blank">@vexornull</a>)</p>
+            <p>Crafted by <strong>Tanveer Hussain</strong> (<a href="https://github.com/vexornull" target="_blank">@vexornull</a>)</p>
         </footer>
     </div>
 
-    <!-- Fullscreen Story Viewer Modal -->
+    <!-- Google-Style Dynamic Story Viewer Modal -->
     <div class="story-modal" id="storyModal">
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
         </div>
-        <button class="close-btn" id="closeModal">&times;</button>
+        <button class="close-btn" id="closeModal" aria-label="Close">&times;</button>
         <div class="story-content" id="storyContent">
             <!-- Dynamic Content -->
         </div>
-        <div class="viewer-credit">Tanveer Hussain @vexornull</div>
+        <div class="viewer-credit">
+            <span class="pulse-icon"></span> Tanveer Hussain @vexornull
+        </div>
     </div>
 
     <script type="module" src="app.js"></script>
