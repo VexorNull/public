@@ -1,6 +1,5 @@
-import { db, storage } from './firebase-config.js';
+import { db } from './firebase-config.js';
 import { collection, addDoc, query, orderBy, onSnapshot, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
 const contentType = document.getElementById('contentType');
 const textGroup = document.getElementById('textInputGroup');
@@ -24,7 +23,17 @@ contentType.addEventListener('change', (e) => {
     }
 });
 
-// Form Submission
+// Helper Function: File ko Base64 string me convert karne k liye
+const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
+};
+
+// Form Submission (Direct to Firestore)
 storyForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -41,47 +50,51 @@ storyForm.addEventListener('submit', async (e) => {
     const file = document.getElementById('mediaFile').files[0];
 
     if (type !== 'text' && !file) {
-        alert("Image ya video file select karna zaroori hai!");
+        alert("Image ya media file select karna zaroori hai!");
         return;
     }
 
     submitBtn.disabled = true;
-    submitBtn.innerText = "Publishing...";
+    submitBtn.innerText = "Processing & Saving...";
 
     let mediaUrl = "";
-    let storagePath = "";
 
     try {
         if (type !== 'text' && file) {
-            storagePath = `stories/${Date.now()}_${file.name}`;
-            const storageRef = ref(storage, storagePath);
-            const snapshot = await uploadBytes(storageRef, file);
-            mediaUrl = await getDownloadURL(snapshot.ref);
+            // Check file size (Firestore document limit 1MB hoti hai, isliye choti images rakhein)
+            if (file.size > 800 * 1024) { 
+                alert("File ka size kafi bara hai! Please 800KB se kam size ki image upload karein (sirf Database use hone ki waja se).");
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Publish Story";
+                return;
+            }
+            // File ko Base64 String banayein
+            mediaUrl = await convertFileToBase64(file);
         }
 
+        // Direct Firestore Database me save karein
         await addDoc(collection(db, "stories"), {
             author: author,
             type: type,
             text: text || "",
             bgColor: bgColor || "#075e54",
             mediaUrl: mediaUrl,
-            storagePath: storagePath,
             views: 0,
             createdAt: Date.now()
         });
 
-        alert("Story successfully publish ho gayi!");
+        alert("Story successfully Database me publish ho gayi!");
         storyForm.reset();
     } catch (err) {
         console.error(err);
-        alert("Upload fail hua: " + err.message);
+        alert("Publishing fail hui: " + err.message);
     } finally {
         submitBtn.disabled = false;
         submitBtn.innerText = "Publish Story";
     }
 });
 
-// Fetch & Delete Stories Panel
+// Manage Stories Section
 const q = query(collection(db, "stories"), orderBy("createdAt", "desc"));
 onSnapshot(q, (snapshot) => {
     adminStoryList.innerHTML = "";
@@ -99,12 +112,12 @@ onSnapshot(q, (snapshot) => {
             <button class="delete-btn" data-id="${storyId}">Delete</button>
         `;
 
-        card.querySelector('.delete-btn').addEventListener('click', () => deleteStory(storyId, story.storagePath));
+        card.querySelector('.delete-btn').addEventListener('click', () => deleteStory(storyId));
         adminStoryList.appendChild(card);
     });
 });
 
-async function deleteStory(id, storagePath) {
+async function deleteStory(id) {
     const pin = prompt("Confirm Admin PIN to Delete Story:");
     if (pin !== ADMIN_PIN) {
         alert("Incorrect PIN!");
@@ -113,13 +126,7 @@ async function deleteStory(id, storagePath) {
 
     try {
         await deleteDoc(doc(db, "stories", id));
-
-        if (storagePath) {
-            const fileRef = ref(storage, storagePath);
-            await deleteObject(fileRef).catch(e => console.log("Storage file cleanup:", e));
-        }
-
-        alert("Story successfully delete kar di gayi hai!");
+        alert("Story Database se delete kar di gayi hai!");
     } catch (err) {
         alert("Delete failed: " + err.message);
     }
