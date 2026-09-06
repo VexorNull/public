@@ -2,6 +2,8 @@
 
 Welcome to the official repository for **Status Feed v9.0**, a sleek, modern, and real-time dynamic story web application built with a Glassmorphism dark-mode aesthetic and powered by Firebase Firestore.
 
+🔗 **Live Demo / Preview**: [https://vexornull.github.io/public/](https://vexornull.github.io/public/)
+
 ---
 
 ## ✨ Key Features
@@ -72,4 +74,5 @@ Open <code>index.html</code> in any modern web browser or serve via a local web 
 
 Crafted with precision by **Tanveer Hussain**
 
+- **Live Site**: [https://vexornull.github.io/public/](https://vexornull.github.io/public/)
 - **GitHub**: [@vexornull](https://github.com/vexornull)
