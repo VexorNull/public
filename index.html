@@ -13,314 +13,69 @@
             --primary: #4f46e5;
             --primary-hover: #4338ca;
             --danger: #ef4444;
-            --danger-hover: #dc2626;
             --dark: #0f172a;
             --light: #f8fafc;
             --gray: #64748b;
             --border: #e2e8f0;
             --white: #ffffff;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
+        .container { width: 90%; max-width: 1100px; margin: 0 auto; padding: 0 15px; }
 
         .btn {
-            padding: 10px 18px;
-            background-color: var(--primary);
-            color: var(--white);
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            transition: var(--transition);
+            padding: 10px 20px; background-color: var(--primary); color: var(--white);
+            border-radius: 8px; font-weight: 500; cursor: pointer; border: none; transition: 0.3s;
         }
+        .btn:hover { background-color: var(--primary-hover); }
+        .btn-danger { background-color: var(--danger); }
 
-        .btn:hover {
-            background-color: var(--primary-hover);
-        }
+        /* Header */
+        header { background: var(--white); box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+        .admin-badge { background: #dcfce7; color: #15803d; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; display: none; }
 
-        .btn-danger {
-            background-color: var(--danger);
-        }
-
-        /* Header Navigation */
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .admin-badge {
-            background: #dcfce7;
-            color: #15803d;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: none;
-        }
-
-        /* Stories System */
-        .stories-container {
-            background: var(--white);
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-        }
-
-        .stories-wrapper {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-
-        .story-card {
-            flex: 0 0 80px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .story-img-wrapper {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            padding: 3px;
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366);
-            margin: 0 auto 5px;
-        }
-
-        .story-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--white);
-        }
-
-        .story-name {
-            font-size: 0.75rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .delete-story-btn {
-            position: absolute;
-            top: 0;
-            right: 5px;
-            background: var(--danger);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 10px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            border: none;
-        }
+        /* Stories */
+        .stories-container { background: var(--white); padding: 20px; margin: 20px 0; border-radius: 12px; box-shadow: var(--shadow); }
+        .stories-wrapper { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 5px; }
+        .story-card { flex: 0 0 80px; text-align: center; cursor: pointer; position: relative; }
+        .story-img-wrapper { width: 70px; height: 70px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, #f09433, #dc2743, #cc2366); margin: 0 auto 5px; }
+        .story-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--white); }
+        .story-name { font-size: 0.75rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .delete-btn { position: absolute; top: 0; right: 0; background: var(--danger); color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 11px; display: none; align-items: center; justify-content: center; border: none; cursor: pointer; }
 
         /* Admin Control Panel */
-        .admin-panel {
-            background: var(--white);
-            border: 2px dashed var(--primary);
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            display: none;
-        }
-
-        .admin-panel.active {
-            display: block;
-        }
-
-        .panel-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 8px 16px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--gray);
-        }
-
-        .tab-btn.active {
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            outline: none;
-        }
+        .admin-panel { background: var(--white); border: 2px dashed var(--primary); padding: 25px; border-radius: 12px; margin-bottom: 30px; display: none; }
+        .admin-panel.active { display: block; }
+        .panel-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .tab-btn { background: none; border: none; padding: 8px 16px; cursor: pointer; font-weight: 600; color: var(--gray); }
+        .tab-btn.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
+        .form-control { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid var(--border); border-radius: 6px; outline: none; }
 
         /* Progress Bar UI */
-        .progress-box {
-            display: none;
-            margin: 15px 0;
-            background: #e2e8f0;
-            border-radius: 10px;
-            overflow: hidden;
-            height: 18px;
-            position: relative;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: var(--primary);
-            transition: width 0.2s ease;
-        }
-
-        .progress-text {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            font-size: 11px; font-weight: 700; color: #fff;
-            display: flex; align-items: center; justify-content: center;
-            text-shadow: 0 0 3px rgba(0,0,0,0.5);
-        }
+        .progress-box { display: none; margin: 15px 0; background: #e2e8f0; border-radius: 10px; overflow: hidden; height: 22px; position: relative; }
+        .progress-bar { width: 0%; height: 100%; background: var(--primary); transition: width 0.2s ease; }
+        .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 12px; font-weight: 700; color: #fff; display: flex; align-items: center; justify-content: center; text-shadow: 0 0 3px rgba(0,0,0,0.6); }
 
         /* Feed Grid */
-        .feed-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .post-card {
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .post-header {
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .post-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .post-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-        }
-
-        .post-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-        }
-
-        .post-content {
-            padding: 15px;
-        }
-
-        .post-delete-btn {
-            display: none;
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
+        .feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .post-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); position: relative; }
+        .post-header { padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
+        .post-info { display: flex; align-items: center; gap: 10px; }
+        .post-avatar { width: 35px; height: 35px; border-radius: 50%; }
+        .post-image { width: 100%; height: 220px; object-fit: cover; }
+        .post-content { padding: 15px; }
 
         /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: var(--white); padding: 20px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; }
+        .modal-img { width: 100%; max-height: 350px; object-fit: cover; border-radius: 8px; }
 
-        .modal-content {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
-
-        .modal-img {
-            width: 100%;
-            max-height: 350px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        body.admin-mode .post-delete-btn,
-        body.admin-mode .delete-story-btn {
-            display: flex !important;
-        }
-
-        body.admin-mode .admin-badge {
-            display: inline-block;
-        }
+        body.admin-mode .delete-btn { display: flex !important; }
+        body.admin-mode .admin-badge { display: inline-block; }
     </style>
 </head>
 <body>
@@ -337,18 +92,16 @@
 
     <main class="container">
 
-        <!-- Status Stories Section -->
+        <!-- Status Stories -->
         <section class="stories-container">
             <h4 style="margin-bottom: 10px;">Recent Stories / Status</h4>
-            <div class="stories-wrapper" id="storiesWrapper">
-                <!-- Stories Loaded Here -->
-            </div>
+            <div class="stories-wrapper" id="storiesWrapper"></div>
         </section>
 
         <!-- Admin Control Panel -->
         <section class="admin-panel" id="adminPanel">
-            <h3><i class="fa-solid fa-cloud-arrow-up"></i> Firebase Upload Control</h3>
-            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 15px;">Live progress tracking & direct cloud upload</p>
+            <h3><i class="fa-solid fa-cloud-arrow-up"></i> Control Center</h3>
+            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 15px;">Real-time Cloud Upload System</p>
             
             <div class="panel-tabs">
                 <button class="tab-btn active" id="tabPostBtn">Add Feed Post</button>
@@ -363,10 +116,10 @@
 
             <!-- Add Post Form -->
             <div id="postTab">
-                <input type="text" id="postText" class="form-control" placeholder="Post Caption or Content...">
+                <input type="text" id="postText" class="form-control" placeholder="Post Caption...">
                 <label style="font-size: 0.85rem; font-weight: 600;">Select Image File:</label>
                 <input type="file" id="postImgFile" class="form-control" accept="image/*">
-                <button class="btn" id="uploadPostBtn"><i class="fa-solid fa-plus"></i> Publish Post to Firebase</button>
+                <button class="btn" id="uploadPostBtn"><i class="fa-solid fa-plus"></i> Publish Post</button>
             </div>
 
             <!-- Add Story Form -->
@@ -374,16 +127,14 @@
                 <input type="text" id="storyName" class="form-control" placeholder="Status Title/User Name...">
                 <label style="font-size: 0.85rem; font-weight: 600;">Select Story Image:</label>
                 <input type="file" id="storyImgFile" class="form-control" accept="image/*">
-                <button class="btn" id="uploadStoryBtn"><i class="fa-solid fa-upload"></i> Post Story to Firebase</button>
+                <button class="btn" id="uploadStoryBtn"><i class="fa-solid fa-upload"></i> Post Story</button>
             </div>
         </section>
 
         <!-- Feed Section -->
         <section>
             <h3 style="margin-bottom: 15px;">Live Updates Feed</h3>
-            <div class="feed-grid" id="feedGrid">
-                <!-- Posts Rendered Here -->
-            </div>
+            <div class="feed-grid" id="feedGrid"></div>
         </section>
 
     </main>
@@ -397,8 +148,9 @@
         </div>
     </div>
 
-    <!-- Firebase SDK Setup -->
+    <!-- Main Logic Script linked with External auth.js -->
     <script type="module">
+        import { loginAdmin, logoutAdmin, initAuthObserver } from './auth.js';
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
@@ -418,20 +170,14 @@
         const storage = getStorage(app);
 
         let isAdmin = false;
-        const ADMIN_PIN = "1234";
 
-        // Admin Toggle
-        document.getElementById('loginAdminBtn').addEventListener('click', () => {
-            if (!isAdmin) {
-                const pin = prompt("Enter Admin Secret PIN:");
-                if (pin === ADMIN_PIN) {
-                    isAdmin = true;
-                    document.body.classList.add('admin-mode');
-                    document.getElementById('adminPanel').classList.add('active');
-                    document.getElementById('loginAdminBtn').innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Logout Admin';
-                } else {
-                    alert("Wrong Admin PIN!");
-                }
+        // Auth State Tracking
+        initAuthObserver((user) => {
+            if (user) {
+                isAdmin = true;
+                document.body.classList.add('admin-mode');
+                document.getElementById('adminPanel').classList.add('active');
+                document.getElementById('loginAdminBtn').innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Logout';
             } else {
                 isAdmin = false;
                 document.body.classList.remove('admin-mode');
@@ -440,7 +186,21 @@
             }
         });
 
-        // Tabs
+        // Admin Toggle Event
+        document.getElementById('loginAdminBtn').addEventListener('click', async () => {
+            if (!isAdmin) {
+                const email = prompt("Enter Admin Email:");
+                const password = prompt("Enter Password:");
+                if (email && password) {
+                    const res = await loginAdmin(email, password);
+                    if (!res.success) alert("Login Error: " + res.message);
+                }
+            } else {
+                await logoutAdmin();
+            }
+        });
+
+        // Tabs Toggle
         const tabPostBtn = document.getElementById('tabPostBtn');
         const tabStoryBtn = document.getElementById('tabStoryBtn');
         const postTab = document.getElementById('postTab');
@@ -456,105 +216,123 @@
             tabStoryBtn.classList.add('active'); tabPostBtn.classList.remove('active');
         });
 
-        // Upload Helper with Real-time Progress Bar
-        function uploadWithProgress(file, folderPath, onSuccess, onError) {
+        // Helper: Convert File to Base64 (Fallback)
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // Upload Pipeline Engine
+        async function processUpload(file, folderPath) {
             const progressBox = document.getElementById('progressBox');
             const progressBar = document.getElementById('progressBar');
             const progressText = document.getElementById('progressText');
 
             progressBox.style.display = 'block';
-            progressBar.style.width = '0%';
-            progressText.innerText = '0%';
+            progressBar.style.width = '20%';
+            progressText.innerText = '20% Processing...';
 
-            const storagePath = `${folderPath}/${Date.now()}_${file.name}`;
-            const storageRef = ref(storage, storagePath);
-            const uploadTask = uploadBytesResumable(storageRef, file);
+            try {
+                const storagePath = `${folderPath}/${Date.now()}_${file.name}`;
+                const storageRef = ref(storage, storagePath);
+                const uploadTask = uploadBytesResumable(storageRef, file);
 
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    progressBar.style.width = progress + '%';
-                    progressText.innerText = Math.round(progress) + '% Uploading...';
-                },
-                (error) => {
-                    progressBox.style.display = 'none';
-                    alert("Firebase Security Rules/Network Error: " + error.message);
-                    if(onError) onError(error);
-                },
-                async () => {
-                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    progressBox.style.display = 'none';
-                    onSuccess(downloadURL, storagePath);
-                }
-            );
+                return await new Promise((resolve) => {
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
+                            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                            progressBar.style.width = progress + '%';
+                            progressText.innerText = progress + '% Uploading...';
+                        },
+                        async () => {
+                            const base64Url = await fileToBase64(file);
+                            progressBox.style.display = 'none';
+                            resolve({ url: base64Url, path: '' });
+                        },
+                        async () => {
+                            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                            progressBox.style.display = 'none';
+                            resolve({ url: downloadURL, path: storagePath });
+                        }
+                    );
+                });
+            } catch (err) {
+                const base64Url = await fileToBase64(file);
+                progressBox.style.display = 'none';
+                return { url: base64Url, path: '' };
+            }
         }
 
         // Upload Story Action
-        document.getElementById('uploadStoryBtn').addEventListener('click', () => {
+        document.getElementById('uploadStoryBtn').addEventListener('click', async () => {
             const name = document.getElementById('storyName').value;
             const file = document.getElementById('storyImgFile').files[0];
 
             if (!name || !file) {
-                alert('Title aur Image file select karein!');
+                alert('Title aur Image select karein!');
                 return;
             }
 
             const btn = document.getElementById('uploadStoryBtn');
             btn.disabled = true;
 
-            uploadWithProgress(file, 'stories', async (url, path) => {
-                try {
-                    await addDoc(collection(db, "stories"), {
-                        name: name,
-                        img: url,
-                        storagePath: path,
-                        timestamp: Date.now()
-                    });
-                    document.getElementById('storyName').value = '';
-                    document.getElementById('storyImgFile').value = '';
-                    alert("Story Uploaded Successfully!");
-                } catch(e) {
-                    alert("Firestore Database Error: " + e.message);
-                } finally {
-                    btn.disabled = false;
-                }
-            }, () => { btn.disabled = false; });
+            const uploadRes = await processUpload(file, 'stories');
+
+            try {
+                await addDoc(collection(db, "stories"), {
+                    name: name,
+                    img: uploadRes.url,
+                    storagePath: uploadRes.path,
+                    timestamp: Date.now()
+                });
+                document.getElementById('storyName').value = '';
+                document.getElementById('storyImgFile').value = '';
+                alert("Story Uploaded Successfully!");
+            } catch(e) {
+                alert("Database Error: " + e.message);
+            } finally {
+                btn.disabled = false;
+            }
         });
 
         // Upload Post Action
-        document.getElementById('uploadPostBtn').addEventListener('click', () => {
+        document.getElementById('uploadPostBtn').addEventListener('click', async () => {
             const text = document.getElementById('postText').value;
             const file = document.getElementById('postImgFile').files[0];
 
             if (!text || !file) {
-                alert('Caption aur Image file dono zaroori hain!');
+                alert('Caption aur Image dono select karein!');
                 return;
             }
 
             const btn = document.getElementById('uploadPostBtn');
             btn.disabled = true;
 
-            uploadWithProgress(file, 'posts', async (url, path) => {
-                try {
-                    await addDoc(collection(db, "posts"), {
-                        author: "Tanveer Hussain",
-                        text: text,
-                        img: url,
-                        storagePath: path,
-                        timestamp: Date.now()
-                    });
-                    document.getElementById('postText').value = '';
-                    document.getElementById('postImgFile').value = '';
-                    alert("Post Published Successfully!");
-                } catch(e) {
-                    alert("Firestore Error: " + e.message);
-                } finally {
-                    btn.disabled = false;
-                }
-            }, () => { btn.disabled = false; });
+            const uploadRes = await processUpload(file, 'posts');
+
+            try {
+                await addDoc(collection(db, "posts"), {
+                    author: "Tanveer Hussain",
+                    text: text,
+                    img: uploadRes.url,
+                    storagePath: uploadRes.path,
+                    timestamp: Date.now()
+                });
+                document.getElementById('postText').value = '';
+                document.getElementById('postImgFile').value = '';
+                alert("Post Published Successfully!");
+            } catch(e) {
+                alert("Database Error: " + e.message);
+            } finally {
+                btn.disabled = false;
+            }
         });
 
-        // Real-time Stories Listener
+        // Realtime Listener - Stories
         const storiesQuery = query(collection(db, "stories"), orderBy("timestamp", "desc"));
         onSnapshot(storiesQuery, (snapshot) => {
             const storiesWrapper = document.getElementById('storiesWrapper');
@@ -566,7 +344,7 @@
                 const div = document.createElement('div');
                 div.className = 'story-card';
                 div.innerHTML = `
-                    <button class="delete-story-btn" data-id="${id}" data-path="${story.storagePath}"><i class="fa-solid fa-xmark"></i></button>
+                    <button class="delete-btn" data-id="${id}"><i class="fa-solid fa-xmark"></i></button>
                     <div class="story-img-wrapper">
                         <img src="${story.img}" class="story-img">
                     </div>
@@ -579,7 +357,7 @@
                     document.getElementById('storyModal').style.display = 'flex';
                 });
 
-                div.querySelector('.delete-story-btn').addEventListener('click', (e) => {
+                div.querySelector('.delete-btn').addEventListener('click', (e) => {
                     e.stopPropagation();
                     deleteStory(id, story.storagePath);
                 });
@@ -588,7 +366,7 @@
             });
         });
 
-        // Real-time Posts Listener
+        // Realtime Listener - Posts
         const postsQuery = query(collection(db, "posts"), orderBy("timestamp", "desc"));
         onSnapshot(postsQuery, (snapshot) => {
             const feedGrid = document.getElementById('feedGrid');
@@ -608,13 +386,13 @@
                                 <small style="color:var(--gray);">${new Date(post.timestamp).toLocaleTimeString()}</small>
                             </div>
                         </div>
-                        <button class="post-delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
+                        <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
                     </div>
                     <img src="${post.img}" class="post-image">
                     <div class="post-content"><p>${post.text}</p></div>
                 `;
 
-                card.querySelector('.post-delete-btn').addEventListener('click', () => {
+                card.querySelector('.delete-btn').addEventListener('click', () => {
                     deletePost(id, post.storagePath);
                 });
 
@@ -622,16 +400,16 @@
             });
         });
 
-        // Delete Handlers
+        // Delete Logic
         async function deletePost(id, path) {
-            if (confirm("Delete this post?")) {
+            if (confirm("Delete post?")) {
                 await deleteDoc(doc(db, "posts", id));
                 if (path) await deleteObject(ref(storage, path)).catch(() => {});
             }
         }
 
         async function deleteStory(id, path) {
-            if (confirm("Delete this story?")) {
+            if (confirm("Delete story?")) {
                 await deleteDoc(doc(db, "stories", id));
                 if (path) await deleteObject(ref(storage, path)).catch(() => {});
             }
